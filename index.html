@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>❤️ 给你的心跳代码雨 ❤️</title>
+    <style>
+        body { margin:0; background:#000; }
+        #canvas { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const cvs = document.getElementById('canvas');
+        const ctx = cvs.getContext('2d');
+        cvs.width = window.innerWidth;
+        cvs.height = window.innerHeight;
+
+        const chars = '❤️LOVEYOU';
+        const drops = new Array(Math.floor(cvs.width/20)).fill(0);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0,0,0,0.05)';
+            ctx.fillRect(0,0,cvs.width,cvs.height);
+            ctx.fillStyle = '#ff3399';
+            ctx.font = '18px Arial';
+
+            drops.forEach((y, i) => {
+                ctx.fillText(
+                    chars[Math.floor(Math.random()*chars.length)],
+                    i*20, y*20
+                );
+                if(y*20 > cvs.height && Math.random() > 0.97) drops[i] = 0;
+                drops[i]++;
+            });
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+        // 点击添加爱心
+        cvs.addEventListener('click', e => {
+            ctx.font = '40px Arial';
+            ctx.fillText('❤️', e.clientX-15, e.clientY+10);
+        });
+    </script>
+</body>
+</html>
